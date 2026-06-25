@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RYG Marketing Group — Consultoría estratégica B2B</title>
+<meta name="description" content="Consultoría estratégica B2B para empresas industriales y corporativas del Bajío. Visibilidad, reputación y confianza comercial." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A1B33;
+    --ink-2:#0E2647;
+    --navy:#143A6B;
+    --steel:#5E7CA6;
+    --paper:#F4F6FA;
+    --paper-2:#FFFFFF;
+    --line:rgba(10,27,51,.12);
+    --muted:#566B86;
+    --brass:#C2922E;
+    --brass-hi:#D8A93D;
+    --light:#EAF0F8;
+    --light-muted:#9FB2CC;
+    --maxw:1180px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--brass);font-weight:500;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(10,27,51,0);
+    transition:background .4s var(--ease),backdrop-filter .4s var(--ease),border-color .4s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  header.nav.scrolled{
+    background:rgba(8,21,40,.82);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{font-family:'Space Grotesk';font-weight:700;font-size:1.18rem;color:#fff;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+  .brand .mark{width:11px;height:11px;background:var(--brass);transform:rotate(45deg);display:inline-block}
+  .nav-links{display:flex;gap:34px;align-items:center}
+  .nav-links a{color:var(--light-muted);font-size:.9rem;font-weight:500;transition:color .25s}
+  .nav-links a:hover{color:#fff}
+  .nav-cta{
+    font-family:'Space Grotesk';font-size:.88rem;font-weight:600;
+    color:var(--ink);background:var(--brass);
+    padding:11px 20px;border-radius:2px;transition:background .25s,transform .25s;
+  }
+  .nav-cta:hover{background:var(--brass-hi);transform:translateY(-1px)}
+  .nav-toggle{display:none;background:none;border:0;color:#fff;font-size:1.5rem;cursor:pointer}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;
+    background:
+      radial-gradient(1200px 600px at 78% 18%,rgba(94,124,166,.22),transparent 60%),
+      linear-gradient(160deg,#0B1E39 0%,#0A1B33 55%,#081325 100%);
+    color:var(--light);overflow:hidden;padding-top:90px;
+  }
+  .hero::after{ /* faint diagonal architecture line, echo of the deck */
+    content:"";position:absolute;right:-8%;top:0;bottom:0;width:46%;
+    background:linear-gradient(120deg,transparent 49.6%,rgba(255,255,255,.06) 49.7%,rgba(255,255,255,.06) 50%,transparent 50.1%);
+    pointer-events:none;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;width:100%;position:relative;z-index:2}
+  .hero-copy .eyebrow{opacity:0;transform:translateY(14px);animation:rise .8s var(--ease) .15s forwards}
+  .hero h1{
+    font-size:clamp(2.6rem,6vw,4.6rem);margin:18px 0 0;color:#fff;
+  }
+  .hero h1 .line{display:block;overflow:hidden}
+  .hero h1 .line span{display:inline-block;opacity:0;transform:translateY(110%);animation:slideUp .9s var(--ease) forwards}
+  .hero h1 .line:nth-child(1) span{animation-delay:.28s}
+  .hero h1 .line:nth-child(2) span{animation-delay:.42s}
+  .hero h1 .focusword{
+    color:var(--brass);filter:blur(14px);opacity:0;
+    animation:resolve 1.1s var(--ease) 1.0s forwards;
+  }
+  .hero p.sub{
+    max-width:30em;margin:26px 0 34px;color:var(--light-muted);font-size:1.08rem;
+    opacity:0;transform:translateY(14px);animation:rise .8s var(--ease) .7s forwards;
+  }
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;opacity:0;transform:translateY(14px);animation:rise .8s var(--ease) .9s forwards}
+  .btn{
+    font-family:'Space Grotesk';font-weight:600;font-size:.95rem;
+    padding:15px 26px;border-radius:2px;cursor:pointer;border:1px solid transparent;
+    transition:transform .25s var(--ease),background .25s,border-color .25s,color .25s;display:inline-flex;align-items:center;gap:10px;
+  }
+  .btn-primary{background:var(--brass);color:var(--ink)}
+  .btn-primary:hover{background:var(--brass-hi);transform:translateY(-2px)}
+  .btn-ghost{border-color:rgba(255,255,255,.25);color:#fff}
+  .btn-ghost:hover{border-color:#fff;transform:translateY(-2px)}
+
+  /* 3D signature scene */
+  .scene{position:relative;height:440px;perspective:1300px}
+  .stack{
+    position:absolute;inset:0;transform-style:preserve-3d;
+    transform:rotateX(12deg) rotateY(-22deg);
+    transition:transform .3s ease-out;
+  }
+  .panel{
+    position:absolute;left:50%;top:50%;width:300px;height:184px;
+    border:1px solid rgba(255,255,255,.16);border-radius:6px;
+    background:linear-gradient(145deg,rgba(94,124,166,.16),rgba(20,58,107,.06));
+    backdrop-filter:blur(2px);
+    transform-style:preserve-3d;
+    display:flex;align-items:flex-end;padding:16px;
+    font-family:'IBM Plex Mono';font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--light-muted);
+  }
+  .panel.lead{
+    background:linear-gradient(150deg,#16345f,#0e2647);
+    border-color:rgba(216,169,61,.55);
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.7);
+  }
+  .panel.lead .ptitle{font-family:'Space Grotesk';font-size:1.15rem;letter-spacing:-.01em;text-transform:none;color:#fff;font-weight:700}
+  .panel.lead .pmeta{color:var(--brass)}
+  .panel .pc{display:flex;flex-direction:column;gap:5px}
+  /* chips that converge */
+  .chip{
+    position:absolute;left:50%;top:50%;
+    font-family:'IBM Plex Mono';font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--light);background:rgba(10,27,51,.7);border:1px solid rgba(255,255,255,.18);
+    padding:7px 12px;border-radius:30px;white-space:nowrap;
+    filter:blur(7px);opacity:0;
+  }
+  .focus-ring{
+    position:absolute;left:50%;top:50%;width:520px;height:520px;border-radius:50%;
+    border:1px solid rgba(216,169,61,.18);transform:translate(-50%,-50%);
+    opacity:0;animation:ringIn 1.4s var(--ease) .4s forwards;
+  }
+  .focus-ring.two{width:360px;height:360px;border-color:rgba(216,169,61,.28);animation-delay:.55s}
+
+  /* hero loaded animations */
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  @keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+  @keyframes resolve{to{filter:blur(0);opacity:1}}
+  @keyframes ringIn{to{opacity:1}}
+
+  .scroll-cue{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;
+    font-family:'IBM Plex Mono';font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--light-muted);
+    display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:rise .8s var(--ease) 1.4s forwards;
+  }
+  .scroll-cue .bar{width:1px;height:34px;background:linear-gradient(var(--brass),transparent);animation:cue 1.8s ease-in-out infinite}
+  @keyframes cue{0%,100%{transform:scaleY(.4);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:108px 0}
+  .sec-head{max-width:760px;margin-bottom:56px}
+  .sec-head h2{font-size:clamp(1.9rem,3.6vw,2.9rem);margin:14px 0 0}
+  .sec-head p.lead{color:var(--muted);font-size:1.12rem;margin-top:18px;max-width:60ch}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+  /* brecha */
+  .brecha{background:var(--paper-2)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .card{
+    border:1px solid var(--line);border-radius:8px;padding:34px;background:var(--paper);
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 24px 50px -30px rgba(10,27,51,.35);border-color:rgba(10,27,51,.2)}
+  .card .ico{width:46px;height:46px;border-radius:50%;background:var(--ink);display:grid;place-items:center;margin-bottom:20px}
+  .card .ico svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.7}
+  .card h3{font-size:1.18rem;margin-bottom:18px}
+  .card ul{list-style:none}
+  .card li{padding:8px 0 8px 22px;position:relative;color:var(--muted);border-top:1px solid var(--line)}
+  .card li:first-of-type{border-top:0}
+  .card li::before{content:"";position:absolute;left:0;top:17px;width:7px;height:7px;background:var(--brass);transform:rotate(45deg)}
+  .card.percept li::before{background:var(--steel)}
+
+  /* evaluación */
+  .eval{background:linear-gradient(180deg,#0A1B33,#0B1E39);color:var(--light)}
+  .eval .sec-head h2{color:#fff}
+  .eval .sec-head p.lead{color:var(--light-muted)}
+  .eval-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+  .eval-note{color:var(--light-muted);font-size:1.05rem}
+  .eval-note strong{color:#fff;font-weight:600}
+  .checklist{display:grid;gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden}
+  .checklist .row{display:flex;align-items:center;gap:16px;background:#0A1B33;padding:16px 20px;transition:background .3s}
+  .checklist .row:hover{background:#102a4d}
+  .checklist .box{flex:none;width:26px;height:26px;background:var(--navy);display:grid;place-items:center;border-radius:3px}
+  .checklist .box svg{width:14px;height:14px;stroke:var(--brass);fill:none;stroke-width:2.4}
+  .checklist .row span{font-size:.98rem;color:var(--light)}
+
+  /* qué hace RYG */
+  .areas{background:var(--paper)}
+  .areas-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .acard{
+    border:1px solid var(--line);border-radius:8px;padding:26px 22px;background:var(--paper-2);
+    transition:transform .35s var(--ease),box-shadow .35s,border-color .35s;
+  }
+  .acard:hover{transform:translateY(-5px);box-shadow:0 22px 46px -28px rgba(10,27,51,.4);border-color:var(--brass)}
+  .acard .num{font-family:'IBM Plex Mono';font-size:.72rem;color:var(--steel);letter-spacing:.1em}
+  .acard h3{font-size:1.04rem;margin:12px 0 8px;line-height:1.2}
+  .acard p{font-size:.9rem;color:var(--muted)}
+
+  /* metodología */
+  .method{background:var(--paper-2)}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:30px}
+  .step{padding:0 18px;position:relative;text-align:center}
+  .step .dot{width:54px;height:54px;border-radius:50%;border:1px solid var(--line);background:var(--paper);display:grid;place-items:center;margin:0 auto 22px;position:relative;z-index:2;transition:border-color .3s,background .3s}
+  .step:hover .dot{border-color:var(--brass);background:#fff}
+  .step .dot svg{width:24px;height:24px;stroke:var(--ink);fill:none;stroke-width:1.6}
+  .step .stepnum{font-family:'IBM Plex Mono';font-size:.8rem;color:var(--brass);display:block;margin-bottom:6px}
+  .step h3{font-size:1.05rem;margin-bottom:8px}
+  .step p{font-size:.84rem;color:var(--muted)}
+  .steps::before{content:"";position:absolute;top:27px;left:10%;right:10%;height:1px;background:var(--line);z-index:1}
+  .first-step{margin-top:60px;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:8px;padding:30px 34px;display:flex;gap:26px;align-items:flex-start}
+  .first-step .fs-ico{flex:none;width:52px;height:52px;border-radius:8px;background:var(--ink);display:grid;place-items:center}
+  .first-step .fs-ico svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:1.6}
+  .first-step h3{font-size:1.15rem;margin-bottom:8px}
+  .first-step p{color:var(--muted);font-size:.96rem}
+  .fs-tags{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px}
+  .fs-tags span{font-family:'IBM Plex Mono';font-size:.74rem;color:var(--ink);letter-spacing:.04em}
+  .fs-tags span::before{content:"✓ ";color:var(--brass)}
+
+  /* áreas estratégicas */
+  .pillars{background:var(--ink);color:var(--light)}
+  .pillars .sec-head h2{color:#fff}
+  .pillars .sec-head p.lead{color:var(--light-muted)}
+  .pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .pcard{border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:30px 24px;background:rgba(255,255,255,.02);transition:transform .35s var(--ease),background .35s,border-color .35s}
+  .pcard:hover{transform:translateY(-5px);background:rgba(255,255,255,.05);border-color:rgba(216,169,61,.5)}
+  .pcard .ico{width:50px;height:50px;display:grid;place-items:center;margin-bottom:20px;border:1px solid rgba(255,255,255,.16);border-radius:50%}
+  .pcard .ico svg{width:24px;height:24px;stroke:var(--brass);fill:none;stroke-width:1.5}
+  .pcard h3{font-size:1.1rem;color:#fff;margin-bottom:16px}
+  .pcard ul{list-style:none}
+  .pcard li{font-size:.88rem;color:var(--light-muted);padding:7px 0 7px 16px;position:relative}
+  .pcard li::before{content:"";position:absolute;left:0;top:14px;width:5px;height:5px;background:var(--brass);transform:rotate(45deg)}
+
+  /* CTA / contacto */
+  .closing{background:linear-gradient(150deg,#0B1E39,#0A1B33);color:var(--light);text-align:left}
+  .closing h2{font-size:clamp(2rem,4.5vw,3.4rem);color:#fff;max-width:16ch}
+  .closing .quote{
+    border-left:2px solid var(--brass);padding:14px 0 14px 24px;margin:34px 0;
+    font-family:'Space Grotesk';font-style:italic;font-size:1.25rem;color:#fff;max-width:30ch;
+  }
+  .closing .sub{color:var(--light-muted);max-width:54ch;font-size:1.08rem;margin-top:18px}
+  .closing .btn-primary{margin-top:34px}
+  .contact-row{display:flex;flex-wrap:wrap;gap:40px;margin-top:64px;padding-top:34px;border-top:1px solid rgba(255,255,255,.12)}
+  .contact-item{display:flex;align-items:center;gap:14px}
+  .contact-item .ci-ico{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);display:grid;place-items:center}
+  .contact-item .ci-ico svg{width:18px;height:18px;stroke:var(--brass);fill:none;stroke-width:1.7}
+  .contact-item .ci-label{font-family:'IBM Plex Mono';font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--light-muted)}
+  .contact-item .ci-val{color:#fff;font-size:.95rem;font-weight:500}
+
+  footer{background:#081325;color:var(--light-muted);padding:40px 0;font-size:.85rem}
+  .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .foot-inner .brand{font-size:1rem}
+  .foot-tag{font-family:'IBM Plex Mono';letter-spacing:.18em;text-transform:uppercase;font-size:.7rem}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:10px}
+    .scene{height:340px;margin-top:10px}
+    .areas-grid,.pillars-grid{grid-template-columns:repeat(2,1fr)}
+    .steps{grid-template-columns:repeat(2,1fr);gap:36px 0}
+    .steps::before{display:none}
+    .eval-grid{grid-template-columns:1fr;gap:34px}
+  }
+  @media(max-width:680px){
+    .wrap{padding:0 20px}
+    section{padding:74px 0}
+    .nav-links{display:none}
+    .nav-toggle{display:block}
+    .two-col{grid-template-columns:1fr}
+    .areas-grid{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+    .first-step{flex-direction:column}
+    .pillars-grid{grid-template-columns:1fr}
+    .contact-row{gap:24px}
+    .stack{transform:rotateX(8deg) rotateY(-14deg) scale(.82)}
+  }
+
+  /* focus visibility */
+  a:focus-visible,.btn:focus-visible,button:focus-visible{outline:2px solid var(--brass-hi);outline-offset:3px}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+    .hero h1 .line span,.hero p.sub,.hero-actions,.hero-copy .eyebrow,.scroll-cue{opacity:1;transform:none}
+    .hero h1 .focusword{filter:none;opacity:1}
+    .chip{opacity:.5;filter:blur(2px)}
+    .focus-ring{opacity:1}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand"><span class="mark"></span>RYG<span style="color:var(--light-muted);font-weight:500"> Marketing Group</span></a>
+    <nav class="nav-links">
+      <a href="#brecha">El problema</a>
+      <a href="#que-hace">Qué hacemos</a>
+      <a href="#metodologia">Metodología</a>
+      <a href="#areas">Áreas</a>
+    </nav>
+    <a href="mailto:rbecerril@rygmarketing.com.mx?subject=Solicitud%20de%20diagnóstico%20de%20visibilidad%20B2B" class="nav-cta">Agendar diagnóstico</a>
+    <button class="nav-toggle" aria-label="Menú">☰</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Consultoría estratégica B2B · El Bajío</span>
+      <h1>
+        <span class="line"><span>Fuertes por dentro.</span></span>
+        <span class="line"><span><span class="focusword">Claras</span> por fuera.</span></span>
+      </h1>
+      <p class="sub">Ordenamos cómo una empresa industrial sólida se presenta ante el mercado. Convertimos su capacidad operativa real en visibilidad, reputación y confianza comercial frente a quienes toman decisiones.</p>
+      <div class="hero-actions">
+        <a href="mailto:rbecerril@rygmarketing.com.mx?subject=Solicitud%20de%20diagnóstico%20de%20visibilidad%20B2B" class="btn btn-primary">Agendar diagnóstico →</a>
+        <a href="#metodologia" class="btn btn-ghost">Ver metodología</a>
+      </div>
+    </div>
+
+    <div class="scene" id="scene" aria-hidden="true">
+      <div class="focus-ring"></div>
+      <div class="focus-ring two"></div>
+      <div class="stack" id="stack">
+        <!-- background blurred chips that converge -->
+        <div class="chip" data-chip="1">Experiencia</div>
+        <div class="chip" data-chip="2">Procesos sólidos</div>
+        <div class="chip" data-chip="3">Certificaciones</div>
+        <div class="chip" data-chip="4">Capacidad operativa</div>
+        <div class="chip" data-chip="5">Equipo especializado</div>
+        <!-- depth panels -->
+        <div class="panel" style="transform:translate(-50%,-50%) translateZ(-120px) translateY(40px)"></div>
+        <div class="panel" style="transform:translate(-50%,-50%) translateZ(-60px) translateY(20px)"></div>
+        <div class="panel lead" style="transform:translate(-50%,-50%) translateZ(20px)">
+          <div class="pc">
+            <span class="pmeta" style="font-family:'IBM Plex Mono';font-size:.66rem;letter-spacing:.16em">PERCEPCIÓN ALINEADA</span>
+            <span class="ptitle">Una empresa que se ve<br>tan sólida como opera.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Diagnosticar</span><span class="bar"></span></div>
+</section>
+
+<!-- BRECHA -->
+<section class="brecha" id="brecha">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">El punto de partida</span>
+      <h2>Muchas empresas son fuertes por dentro, pero poco claras por fuera.</h2>
+      <p class="lead">La operación puede ser sólida, pero si no se comunica con claridad, el mercado no siempre la percibe. Esa brecha tiene un costo comercial real.</p>
+    </div>
+    <div class="two-col">
+      <div class="card reveal d1">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
+        <h3>Lo que la empresa sí tiene</h3>
+        <ul>
+          <li>Experiencia y trayectoria real</li>
+          <li>Procesos y capacidad operativa</li>
+          <li>Equipo técnico especializado</li>
+          <li>Certificaciones y estándares</li>
+          <li>Clientes importantes</li>
+        </ul>
+      </div>
+      <div class="card percept reveal d2">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Lo que el mercado a veces percibe</h3>
+        <ul>
+          <li>Un mensaje poco claro</li>
+          <li>Baja visibilidad ante compradores</li>
+          <li>Presentación comercial débil</li>
+          <li>Poca evidencia de su capacidad</li>
+          <li>Diferenciación difusa</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVALUACIÓN -->
+<section class="eval" id="evaluacion">
+  <div class="wrap eval-grid">
+    <div class="reveal">
+      <span class="eyebrow">El proceso empieza antes</span>
+      <h2 style="font-family:'Space Grotesk';font-size:clamp(1.9rem,3.6vw,2.9rem);color:#fff;margin:14px 0 22px">Antes de confiar, su empresa ya fue evaluada.</h2>
+      <p class="eval-note">Antes de pedir una cotización, aceptar una reunión o considerar a un proveedor, un comprador revisa distintos puntos de contacto para formarse una percepción. <strong>La decisión empieza mucho antes del primer contacto</strong> — y muchas veces se gana o se pierde ahí.</p>
+    </div>
+    <div class="checklist reveal d2">
+      <div class="row"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>Sitio web</span></div>
+      <div class="row"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>LinkedIn de empresa</span></div>
+      <div class="row"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>Perfil de los directivos</span></div>
+      <div class="row"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>Presentación comercial</span></div>
+      <div class="row"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>Sectores atendidos y evidencia</span></div>
+      <div class="row"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>Claridad de capacidades</span></div>
+      <div class="row"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span>Reputación institucional</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ HACE RYG -->
+<section class="areas" id="que-hace">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Qué hace RYG</span>
+      <h2>Revisamos cómo se presenta su empresa, detectamos las brechas y construimos una narrativa más clara, profesional y confiable.</h2>
+      <p class="lead">Ayudamos a ordenar y fortalecer la presencia B2B de empresas del sector industrial y corporativo del Bajío.</p>
+    </div>
+    <div class="areas-grid">
+      <div class="acard reveal d1"><span class="num">01</span><h3>Visibilidad B2B</h3><p>Que las empresas correctas encuentren y entiendan lo que usted hace.</p></div>
+      <div class="acard reveal d2"><span class="num">02</span><h3>Reputación institucional</h3><p>Percepción sólida ante clientes, proveedores y socios.</p></div>
+      <div class="acard reveal d3"><span class="num">03</span><h3>Claridad comercial</h3><p>Un mensaje que se entiende en segundos, sin tecnicismos vacíos.</p></div>
+      <div class="acard reveal d4"><span class="num">04</span><h3>Comunicación institucional</h3><p>Coherencia entre lo que dice, muestra y entrega.</p></div>
+      <div class="acard reveal d1"><span class="num">05</span><h3>Liderazgo ejecutivo</h3><p>Sus directivos como voces expertas y confiables del sector.</p></div>
+      <div class="acard reveal d2"><span class="num">06</span><h3>Employer branding</h3><p>Atraer y retener talento técnico mostrando una empresa sólida.</p></div>
+      <div class="acard reveal d3"><span class="num">07</span><h3>Inteligencia comercial</h3><p>Identificar cuentas, decisores y mensajes que abren conversación.</p></div>
+      <div class="acard reveal d4"><span class="num">08</span><h3>Contenido corporativo</h3><p>Material que construye autoridad, no que solo llena el feed.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- METODOLOGÍA -->
+<section class="method" id="metodologia">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Cómo trabajamos</span>
+      <h2>Diagnosticar, ordenar, posicionar, ejecutar y medir.</h2>
+      <p class="lead">Primero entendemos qué necesita comunicar la empresa. La ejecución viene después de la estrategia, nunca antes.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal d1">
+        <div class="dot"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <span class="stepnum">01</span><h3>Diagnosticar</h3><p>Evaluamos presencia digital, comercial e institucional.</p>
+      </div>
+      <div class="step reveal d2">
+        <div class="dot"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><path d="M3 6l1.5 1.5L7 5M3 12l1.5 1.5L7 11M3 18l1.5 1.5L7 17"/></svg></div>
+        <span class="stepnum">02</span><h3>Ordenar</h3><p>Priorizamos brechas, mensajes y audiencias.</p>
+      </div>
+      <div class="step reveal d3">
+        <div class="dot"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></div>
+        <span class="stepnum">03</span><h3>Posicionar</h3><p>Construimos una narrativa clara y diferenciada.</p>
+      </div>
+      <div class="step reveal d4">
+        <div class="dot"><svg viewBox="0 0 24 24"><path d="M12 3c4 2 6 5 6 9 0 3-2 6-6 8-4-2-6-5-6-8 0-4 2-7 6-9z"/><circle cx="12" cy="10" r="2"/></svg></div>
+        <span class="stepnum">04</span><h3>Ejecutar</h3><p>Desarrollamos activos y acciones alineadas.</p>
+      </div>
+      <div class="step reveal d4">
+        <div class="dot"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16l3-4 3 2 4-6"/></svg></div>
+        <span class="stepnum">05</span><h3>Medir</h3><p>Revisamos consistencia, avances y oportunidades.</p>
+      </div>
+    </div>
+    <div class="first-step reveal">
+      <div class="fs-ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+      <div>
+        <h3>Primer paso: Diagnóstico de Visibilidad B2B</h3>
+        <p>Antes de ejecutar, entendemos qué necesita comunicar la empresa y dónde está perdiendo confianza comercial.</p>
+        <div class="fs-tags">
+          <span>Sitio web</span><span>LinkedIn empresa</span><span>Perfiles directivos</span><span>Presentación comercial</span><span>Mensaje y evidencia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÁREAS ESTRATÉGICAS -->
+<section class="pillars" id="areas">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Frentes de acompañamiento</span>
+      <h2>Áreas estratégicas de acompañamiento.</h2>
+      <p class="lead">La estrategia define qué frentes conviene activar según las prioridades de cada empresa.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pcard reveal d1">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M8 11h6M11 8v6"/></svg></div>
+        <h3>Diagnóstico y posicionamiento</h3>
+        <ul><li>Diagnóstico de visibilidad B2B</li><li>Estrategia de posicionamiento industrial</li></ul>
+      </div>
+      <div class="pcard reveal d2">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4-3.5 7-8 9-4.5-2-8-5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Auditoría y reputación</h3>
+        <ul><li>Auditoría digital, comercial y de marca</li><li>Reputación y confianza institucional</li></ul>
+      </div>
+      <div class="pcard reveal d3">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M18 8l1.5 1.5L22 7"/></svg></div>
+        <h3>Liderazgo y talento</h3>
+        <ul><li>Liderazgo ejecutivo en LinkedIn</li><li>Employer branding industrial</li></ul>
+      </div>
+      <div class="pcard reveal d4">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg></div>
+        <h3>Inteligencia y contenido</h3>
+        <ul><li>Inteligencia comercial B2B</li><li>Estrategia de contenido corporativo</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE / CONTACTO -->
+<section class="closing" id="contacto">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Agendemos una sesión</span>
+      <h2>¿La presencia actual de su empresa refleja su solidez real?</h2>
+      <div class="quote">"Una empresa sólida necesita una presencia que refleje esa solidez."</div>
+      <p class="sub">En RYG Marketing Group ayudamos a empresas del sector industrial y corporativo del Bajío a ordenar su narrativa, fortalecer su visibilidad y construir confianza comercial.</p>
+      <a href="mailto:rbecerril@rygmarketing.com.mx?subject=Solicitud%20de%20diagnóstico%20de%20visibilidad%20B2B" class="btn btn-primary">Agendar diagnóstico →</a>
+    </div>
+    <div class="contact-row reveal d2">
+      <div class="contact-item">
+        <div class="ci-ico"><svg viewBox="0 0 24 24"><path d="M3 6l9 7 9-7"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg></div>
+        <div><div class="ci-label">Correo</div><div class="ci-val">rbecerril@rygmarketing.com.mx</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
+        <div><div class="ci-label">Sitio web</div><div class="ci-val">www.rygmarketing.com.mx</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4"/></svg></div>
+        <div><div class="ci-label">LinkedIn</div><div class="ci-val">RYG Marketing Group</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span class="brand" style="color:#fff"><span class="mark" style="background:var(--brass)"></span>RYG Marketing Group</span>
+    <span class="foot-tag">Estrategia · Reputación · Visibilidad B2B</span>
+    <span>© 2026 RYG Marketing Group</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // nav background on scroll
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 40); }
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // scroll reveals
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:0.16, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  if(reduce) return;
+
+  // converge the blurred chips into focus after load
+  var positions = {
+    '1':{x:-220,y:-150,z:60},'2':{x:200,y:-120,z:90},'3':{x:-250,y:90,z:40},
+    '4':{x:230,y:120,z:70},'5':{x:-30,y:-200,z:110}
+  };
+  var chips = document.querySelectorAll('.chip');
+  chips.forEach(function(c){
+    var p = positions[c.dataset.chip];
+    // start scattered
+    c.style.transform = 'translate(-50%,-50%) translate3d('+p.x+'px,'+p.y+'px,'+p.z+'px)';
+    c.style.transition = 'transform 1.3s var(--ease), opacity 1.1s var(--ease), filter 1.1s var(--ease)';
+  });
+  // first show scattered, then pull toward center + sharpen, then fade as the panel dominates
+  setTimeout(function(){
+    chips.forEach(function(c){ c.style.opacity = '0.85'; c.style.filter = 'blur(5px)'; });
+  }, 250);
+  setTimeout(function(){
+    chips.forEach(function(c){
+      c.style.transform = 'translate(-50%,-50%) translate3d(0,0,40px)';
+      c.style.filter = 'blur(0.5px)'; c.style.opacity = '0.0';
+    });
+  }, 1500);
+
+  // mouse parallax on the 3D stack
+  var scene = document.getElementById('scene');
+  var stack = document.getElementById('stack');
+  if(scene && stack && window.innerWidth > 980){
+    var baseX = 12, baseY = -22, cur = {x:baseX,y:baseY}, tgt = {x:baseX,y:baseY};
+    scene.addEventListener('mousemove', function(ev){
+      var r = scene.getBoundingClientRect();
+      var px = (ev.clientX - r.left)/r.width - 0.5;
+      var py = (ev.clientY - r.top)/r.height - 0.5;
+      tgt.x = baseX - py*10;
+      tgt.y = baseY + px*16;
+    });
+    scene.addEventListener('mouseleave', function(){ tgt.x = baseX; tgt.y = baseY; });
+    (function loop(){
+      cur.x += (tgt.x - cur.x)*0.08;
+      cur.y += (tgt.y - cur.y)*0.08;
+      stack.style.transform = 'rotateX('+cur.x+'deg) rotateY('+cur.y+'deg)';
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  // mobile menu (links scroll within page)
+  var toggle = document.querySelector('.nav-toggle');
+  if(toggle){ toggle.addEventListener('click', function(){
+    var links = document.querySelector('.nav-links');
+    var open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '72px'; links.style.right='20px';
+    links.style.background='rgba(8,21,40,.96)'; links.style.padding='18px 22px';
+    links.style.borderRadius='6px'; links.style.gap='16px';
+  }); }
+})();
+</script>
+</body>
+</html>
